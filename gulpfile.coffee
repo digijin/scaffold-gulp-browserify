@@ -6,7 +6,6 @@ uglify = require 'gulp-uglify'
 sourcemaps = require 'gulp-sourcemaps'
 t2 = require 'through2'
 coffeeify = require 'coffeeify'
-path = require 'path'
 
 templatify = require './gulptasks/templatify'
 
@@ -22,9 +21,9 @@ gulp.task 'js', ->
 
 	bundler.bundle()
 		.pipe(source('bundle.js'))
-		.pipe(buffer())
-		.pipe(sourcemaps.init(loadMaps: true))
-		.pipe(uglify())
-		.pipe(sourcemaps.write('./'))#
+		# .pipe(buffer())
+		# .pipe(sourcemaps.init(loadMaps: true))
+		# .pipe(uglify())
+		# .pipe(sourcemaps.write('./'))#
 		.pipe gulp.dest('./dist/')
 
