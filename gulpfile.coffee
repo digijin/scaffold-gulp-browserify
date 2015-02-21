@@ -17,20 +17,19 @@ gulp.task 'js', ->
 		debug: true)
 	bundler.transform coffeeify
 
-	xform = t2.obj (file, enc, cb) ->
-		console.log String file.contents
-		@push file
-		cb()
+	# xform = t2.obj (file, enc, cb) ->
+	# 	console.log String file.contents
+	# 	@push file
+	# 	cb()
 
 	bundle = ->
 		bundler.bundle()
 			.pipe(source('bundle.js'))
 			.pipe(buffer())
 			.pipe(sourcemaps.init(loadMaps: true))
-			# do transforms
-			.pipe(xform)
+			# .pipe(xform)
 			.pipe(uglify())
-			.pipe(sourcemaps.write('./'))
+			.pipe(sourcemaps.write())#'./'
 			.pipe gulp.dest('./dist/')
 
 	bundle()
