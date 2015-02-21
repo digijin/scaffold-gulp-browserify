@@ -1,24 +1,23 @@
-gulp = require 'gulp'
-coffee = require 'coffee-script'
-browserify = require 'browserify'
-through2 = require 'through2'
-coffeeify = require 'coffeeify'
-rename = require 'gulp-rename'
-buffer = require 'vinyl-buffer'
+browserify = require('browserify')
+gulp = require('gulp')
+source = require('vinyl-source-stream')
+buffer = require('vinyl-buffer')
+uglify = require('gulp-uglify')
+sourcemaps = require('gulp-sourcemaps')
 
 
-gulp.task 'default', ['bundle']
-
-
-gulp.task 'bundle', ->
-	bundler = browserify
+gulp.task 'default', ->
+	bundler = browserify(
 		entries: [ './src/test.js' ]
-		debug: true
+		debug: true)
 
 	bundle = ->
-		console.log bundler.pipe()
-		# bundler.bundle()
-		# .pipe buffer()
-		# .pipe gulp.dest('./dist/js/')
+		bundler.bundle()
+			.pipe(source('bundle.js'))
+			.pipe(buffer())
+			.pipe(sourcemaps.init(loadMaps: true))
+			.pipe(uglify())
+			.pipe(sourcemaps.write('./'))
+			.pipe gulp.dest('./dist/')
 
 	bundle()
