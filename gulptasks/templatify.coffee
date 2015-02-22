@@ -2,6 +2,8 @@ path = require 'path'
 t2 = require 'through2'
 _ = require 'underscore'
 
+
+
 # opts =
 # 	source: true
 
@@ -10,14 +12,16 @@ module.exports = (file) ->
 		return t2()
 
 	t2 (data, enc, cb) ->
-		console.log String data
 		# console.log 
 		# if opts.source
-		# data = _.template(String data).source
-		data = "console.log('test');"
+		data = String data
+		data = 'module.exports = ' + _.template(data).source
+		# console.log data
+
+		# data = "console.log('"+data+"');"
 		# else
 		# 	data = '_=require("underscore");module'
-		@push data
+		@push new Buffer data
 		cb()
 	# write = (buf) ->
 	# 	data += buf
