@@ -2,8 +2,6 @@ path = require 'path'
 t2 = require 'through2'
 _ = require 'underscore'
 
-
-
 # opts =
 # 	source: true
 
