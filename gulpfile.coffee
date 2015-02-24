@@ -7,23 +7,19 @@ sourcemaps = require 'gulp-sourcemaps'
 t2 = require 'through2'
 coffeeify = require 'coffeeify'
 
-templatify = require './gulptasks/templatify'
+templatify = require 'browserify-underscore-templatify'
 
 gulp.task 'default', ['js'], ->
-	# gulp.watch 'gulpfile.coffee', ['js']
+	gulp.watch 'src/*.*', ['js']
 
 gulp.task 'js', ->
 	bundler = browserify(
 		entries: [ './src/index.coffee' ]
 		debug: true)
 	bundler.transform coffeeify
-	bundler.transform templatify
+	bundler.transform templatify()
 
 	bundler.bundle()
 		.pipe(source('bundle.js'))
-		# .pipe(buffer())
-		# .pipe(sourcemaps.init(loadMaps: true))
-		# .pipe(uglify())
-		# .pipe(sourcemaps.write('./'))#
 		.pipe gulp.dest('./dist/')
 
