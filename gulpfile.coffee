@@ -1,11 +1,13 @@
-browserify = require 'browserify'
 gulp = require 'gulp'
+
+browserify = require 'browserify'
 source = require 'vinyl-source-stream'
+
 coffeeify = require 'coffeeify'
 
-sass = require 'gulp-sass'
-
 templatify = require 'browserify-underscore-templatify'
+
+sass = require 'gulp-sass'
 
 gulp.task 'default', ['build'], ->
 	gulp.watch 'src/*.*', ['build']
