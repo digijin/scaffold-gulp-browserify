@@ -6,7 +6,7 @@ source = require 'vinyl-source-stream'
 coffeeify = require 'coffeeify'
 
 templatify = require 'browserify-underscore-templatify'
-
+_ = require 'underscore'
 
 
 externals = 
@@ -21,34 +21,20 @@ gulp.task 'js', ->
 	bundler.transform coffeeify
 	bundler.transform templatify()
 
-	# externals.forEach (ex) ->
-	# 	bundler.external(ex)
-	bundler.external 'underscore'
+	_.keys(externals).forEach (ex) ->
+		bundler.external(ex)
 
 	bundler.bundle()
 		.pipe(source('bundle.js'))
 		.pipe gulp.dest('./dist/')
 
-
-
 gulp.task 'vendor', ->
 
 	bundler = browserify()
-		# entries: './src/externals.js'
 
-
-	# paths = [
-	# 	{
-	# 		src: './bower_components/underscore/underscore.js'
-	# 		expose: 'uscor'
-	# 	}
-	# ]
-	# bundler.plugin remapify, paths
-	bundler.require './bower_components/underscore/underscore.js', expose: 'underscore'
-
-	# externals.forEach (ex) ->
-	# 	bundler.require(ex)
-
+	for name of externals
+		bundler.require externals[name], expose: name
+	
 	bundler.bundle()
 		.pipe source 'vendor.js'
 		.pipe gulp.dest './dist'
