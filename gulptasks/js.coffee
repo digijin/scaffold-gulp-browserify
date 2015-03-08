@@ -7,19 +7,23 @@ coffeeify = require 'coffeeify'
 
 templatify = require 'browserify-underscore-templatify'
 
-externals = [
-	'underscore'
-]
+
+
+externals = 
+	'underscore': './bower_components/underscore/underscore.js'
+
 
 gulp.task 'js', ->
 	bundler = browserify(
 		entries: [ './src/index.coffee' ]
+		cwd: './'
 		debug: true)
 	bundler.transform coffeeify
 	bundler.transform templatify()
 
-	externals.forEach (ex) ->
-		bundler.external(ex)
+	# externals.forEach (ex) ->
+	# 	bundler.external(ex)
+	bundler.external 'underscore'
 
 	bundler.bundle()
 		.pipe(source('bundle.js'))
@@ -30,10 +34,20 @@ gulp.task 'js', ->
 gulp.task 'vendor', ->
 
 	bundler = browserify()
-		# entries: './src/blank.js'
+		# entries: './src/externals.js'
 
-	externals.forEach (ex) ->
-		bundler.require(ex)
+
+	# paths = [
+	# 	{
+	# 		src: './bower_components/underscore/underscore.js'
+	# 		expose: 'uscor'
+	# 	}
+	# ]
+	# bundler.plugin remapify, paths
+	bundler.require './bower_components/underscore/underscore.js', expose: 'underscore'
+
+	# externals.forEach (ex) ->
+	# 	bundler.require(ex)
 
 	bundler.bundle()
 		.pipe source 'vendor.js'
