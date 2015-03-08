@@ -1,0 +1,19 @@
+{
+  "name": "scaffold-gulp-browserify",
+  "version": "0.0.0",
+  "homepage": "https://github.com/digijin/scaffold-gulp-browserify",
+  "authors": [
+    "James Smith <james@digijin.com>"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "underscore": "~1.8.2"
+  }
+}
